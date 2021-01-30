@@ -13,7 +13,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: dev
+  stage: prod
   region: us-east-2
   # To load environment variables externally
   # rename env.example to .env and uncomment
@@ -24,8 +24,7 @@ provider:
   #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
   environment:
     tableName: notes
-
-iamRoleStatements:
+  iamRoleStatements:
   - Effect: Allow
     Action: 
       - dynamodb:Scan
@@ -35,7 +34,17 @@ iamRoleStatements:
       - dynamodb:UpdateItem
       - dynamodb:DeleteItem
       - dynamodb:DescribeTable
-    Resource: "arn:aws:dynamodb:us-east-2:*:*"
+    Resource: "arn:aws:dynamodb:us-east-2:438816200659:*"
+
+# old Action:
+# - dynamodb:Scan
+# - dynamodb:Query
+# - dynamodb:GetItem
+# - dynamodb:PutItem
+# - dynamodb:UpdateItem
+# - dynamodb:DeleteItem
+# - dynamodb:DescribeTable
+# Resource: "arn:aws:dynamodb:us-east-2:*:*"
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
