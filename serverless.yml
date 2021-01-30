@@ -24,6 +24,8 @@ provider:
   #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
   environment:
     tableName: notes
+  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB
   iamRoleStatements:
   - Effect: Allow
     Action: 
@@ -47,6 +49,7 @@ provider:
 # Resource: "arn:aws:dynamodb:us-east-2:*:*"
 
 functions:
+  # - authorizer: authenticate using the AWS IAM role
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /notes
   # - method: POST request
@@ -56,6 +59,7 @@ functions:
       - http:
           path: notes
           method: post
+          authorizer: aws_iam
   # Defines an HTTP API endpoint that calls the main function in get.js
   # - path: url path is /notes/{id}
   # - method: GET request
@@ -65,6 +69,7 @@ functions:
       - http:
           path: notes/{id}
           method: get
+          authorizer: aws_iam
   list:
     # Defines an HTTP API endpoint that calls the main function in list.js
     # - path: url path is /notes
@@ -74,6 +79,7 @@ functions:
       - http:
           path: notes
           method: get
+          authorizer: aws_iam
   update:
     # Defines an HTTP API endpoint that calls the main function in update.js
     # - path: url path is /notes/{id}
@@ -83,6 +89,7 @@ functions:
       - http:
           path: notes/{id}
           method: put
+          authorizer: aws_iam
   delete:
     # Defines an HTTP API endpoint that calls the main function in delete.js
     # - path: url path is /notes/{id}
@@ -92,4 +99,4 @@ functions:
       - http:
           path: notes/{id}
           method: delete
-
+          authorizer: aws_iam
